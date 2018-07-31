@@ -4,7 +4,6 @@ package io.github.mrtry.noixer
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.GridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -30,7 +29,6 @@ class AudioFragment : Fragment() {
 
         binding.root.audioList.apply {
             this.layoutManager = GridLayoutManager(activity, 2)
-            this.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
             this.setHasFixedSize(true)
             this.adapter = AudioAdapter(this@AudioFragment.audioList)
         }

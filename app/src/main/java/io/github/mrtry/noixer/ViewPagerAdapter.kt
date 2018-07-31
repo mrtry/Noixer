@@ -8,15 +8,10 @@ package io.github.mrtry.noixer
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
-import java.util.*
 
 class ViewPagerAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {
 
-    private val fragmentList: MutableList<Fragment>
-
-    init {
-        this.fragmentList = ArrayList()
-    }
+    private val fragmentList = mutableListOf<Fragment>()
 
     fun addFragment(fragment: Fragment) {
         fragmentList.add(fragment)
