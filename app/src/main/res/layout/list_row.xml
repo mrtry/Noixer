@@ -16,12 +16,14 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <Button
+        <ImageButton
             android:id="@+id/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="@{viewModel}"
-            android:text="てーてってれー" />
+            android:tint="@{viewModel.tint}"
+            android:background="@color/transparent"
+            android:src="@{viewModel.getIcon(context)}"
+            android:onClick="@{viewModel}" />
 
         <SeekBar
             android:id="@+id/seekBar"

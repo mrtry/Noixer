@@ -53,8 +53,8 @@ class AudioPlayerService : Service() {
 
         when (event.audio.isPlaying) {
             true -> {
-                if (!playerMap.containsKey(event.audio.resId)) {
-                    val player = MediaPlayer.create(this, event.audio.resId)
+                if (!playerMap.containsKey(event.audio.audioResId)) {
+                    val player = MediaPlayer.create(this, event.audio.audioResId)
 
                     player.isLooping = true
                     player.start()
@@ -69,17 +69,17 @@ class AudioPlayerService : Service() {
                         startForeground(1, NotificationHelper(this).createNotification())
                     }
 
-                    playerMap[event.audio.resId] = player
+                    playerMap[event.audio.audioResId] = player
                 }
 
-                playerMap[event.audio.resId]?.setVolume(event.audio.volume, event.audio.volume)
+                playerMap[event.audio.audioResId]?.setVolume(event.audio.volume, event.audio.volume)
             }
             false -> {
-                val player = playerMap[event.audio.resId]
+                val player = playerMap[event.audio.audioResId]
 
                 player?.let {
                     stop(it)
-                    playerMap.remove(event.audio.resId)
+                    playerMap.remove(event.audio.audioResId)
 
                     if (playerMap.isEmpty()) {
                         stopForeground(true)
