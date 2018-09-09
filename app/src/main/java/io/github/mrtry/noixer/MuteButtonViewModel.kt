@@ -9,6 +9,6 @@ import org.greenrobot.eventbus.EventBus
  */
 class MuteButtonViewModel : View.OnClickListener {
     override fun onClick(p0: View?) {
-        EventBus.getDefault().post(MuteButtonClickedEvent())
+        EventBus.getDefault().post(MuteAudioEvent())
     }
 }

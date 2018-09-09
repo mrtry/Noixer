@@ -50,7 +50,7 @@ class AudioViewModel(audio: Audio) : View.OnClickListener, SeekBar.OnSeekBarChan
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onMessageEvent(event: MuteButtonClickedEvent) {
+    fun onMessageEvent(event: MuteAudioEvent) {
         updateAudioState(false)
     }
 }

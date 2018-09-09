@@ -5,8 +5,12 @@
     <data>
 
         <variable
-            name="viewModel"
+            name="muteButtonViewModel"
             type="io.github.mrtry.noixer.MuteButtonViewModel" />
+
+        <variable
+            name="timerButtonViewModel"
+            type="io.github.mrtry.noixer.TimerButtonViewModel" />
     </data>
 
     <LinearLayout
@@ -25,24 +29,37 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <ImageButton
                 android:id="@+id/muteButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:background="@color/background"
+                android:onClick="@{muteButtonViewModel}"
                 android:padding="16dp"
-                android:gravity="left"
-                android:onClick="@{viewModel}"
                 android:src="@drawable/ic_volume_off"
-                android:tint="@color/light_gray"
-                android:background="@color/background" />
+                android:tint="@color/gray" />
 
             <com.kazy.lxindicator.LxIndicatorGroup
                 android:id="@+id/indicator_view"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="32dp"
-                android:gravity="center" />
+                android:layout_gravity="center_horizontal" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:background="@color/background"
+                android:onClick="@{timerButtonViewModel}"
+                android:padding="16dp"
+                android:src="@{timerButtonViewModel.icon}"
+                android:tint="@color/light_gray" />
+
         </LinearLayout>
     </LinearLayout>
 </layout>
