@@ -7,9 +7,9 @@ import android.content.ServiceConnection
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.os.IBinder
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
-import android.widget.FrameLayout
 import io.github.mrtry.noixer.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
     }
 
-    private val serviceConnection = object: ServiceConnection {
+    private val serviceConnection = object : ServiceConnection {
         override fun onServiceConnected(className: ComponentName,
                                         iBinder: IBinder) {
             val binder = iBinder as AudioPlayerService.LocalBinder
@@ -37,12 +37,12 @@ class MainActivity : AppCompatActivity() {
             isBound = true
 
             val audioList = listOf(
-                    Audio(R.raw.nc31909),
-                    Audio(R.raw.nc2),
-                    Audio(R.raw.nc3),
-                    Audio(R.raw.nc4),
-                    Audio(R.raw.nc5),
-                    Audio(R.raw.nc6)
+                    Audio(R.raw.nc31909, ContextCompat.getDrawable(this@MainActivity, R.drawable.ic_umbrella)!!, ContextCompat.getColor(this@MainActivity, R.color.umbrella)),
+                    Audio(R.raw.nc2, ContextCompat.getDrawable(this@MainActivity, R.drawable.ic_forest)!!, ContextCompat.getColor(this@MainActivity, R.color.forest)),
+                    Audio(R.raw.nc3, ContextCompat.getDrawable(this@MainActivity, R.drawable.ic_moon)!!, ContextCompat.getColor(this@MainActivity, R.color.moon)),
+                    Audio(R.raw.nc4, ContextCompat.getDrawable(this@MainActivity, R.drawable.ic_mug)!!, ContextCompat.getColor(this@MainActivity, R.color.mug)),
+                    Audio(R.raw.nc5, ContextCompat.getDrawable(this@MainActivity, R.drawable.ic_sea_snail)!!, ContextCompat.getColor(this@MainActivity, R.color.sea_snail)),
+                    Audio(R.raw.nc6, ContextCompat.getDrawable(this@MainActivity, R.drawable.ic_fire)!!, ContextCompat.getColor(this@MainActivity, R.color.fire))
             )
             syncAudioState(audioList)
 
@@ -66,12 +66,13 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_main)
         bindService(serviceIntent, serviceConnection, Context.BIND_AUTO_CREATE)
+        binding.setLifecycleOwner(this)
     }
 
     private fun syncAudioState(audioList: List<Audio>) {
         audioList.forEach {
-            Log.d(MainActivity::class.java.simpleName, "${service?.playerMap?.containsKey(it.resId)}")
-            if (service?.playerMap?.containsKey(it.resId) == true) {
+            Log.d(MainActivity::class.java.simpleName, "${service?.playerMap?.containsKey(it.audioResId)}")
+            if (service?.playerMap?.containsKey(it.audioResId) == true) {
                 it.isPlaying = true
             }
         }

@@ -6,4 +6,12 @@
     <color name="gray">#a59e99</color>
     <color name="light_gray">#dedcdb</color>
     <color name="transparent">#00000000</color>
+
+    <color name="umbrella">#2196F3</color>
+    <color name="fire">#FF9800</color>
+    <color name="forest">#8BC34A</color>
+    <color name="moon">#FFEB3B</color>
+    <color name="mug">#795548</color>
+    <color name="sea_snail">#00BCD4</color>
+
 </resources>
