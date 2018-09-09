@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
     <data>
+
+        <variable
+            name="viewModel"
+            type="io.github.mrtry.noixer.MuteButtonViewModel" />
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/background"
         android:orientation="vertical"
         tools:context=".MainActivity">
 
@@ -15,15 +21,28 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:layout_gravity="center"
-            />
+            android:layout_gravity="center" />
 
-        <com.kazy.lxindicator.LxIndicatorGroup
-            android:id="@+id/indicator_view"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="32dp"
-            android:gravity="center"
-            />
+            android:layout_height="wrap_content">
 
+            <ImageButton
+                android:id="@+id/muteButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:gravity="left"
+                android:onClick="@{viewModel}"
+                android:src="@drawable/ic_volume_off"
+                android:tint="@color/light_gray"
+                android:background="@color/background" />
+
+            <com.kazy.lxindicator.LxIndicatorGroup
+                android:id="@+id/indicator_view"
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:gravity="center" />
+        </LinearLayout>
     </LinearLayout>
 </layout>

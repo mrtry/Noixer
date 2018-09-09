@@ -6,6 +6,8 @@ import android.graphics.PorterDuff
 import android.view.View
 import android.widget.SeekBar
 import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 
 /**
@@ -17,15 +19,19 @@ class AudioViewModel(audio: Audio) : View.OnClickListener, SeekBar.OnSeekBarChan
 
     init {
         audioObservable.value = audio
+        EventBus.getDefault().register(this)
     }
 
     private fun currentState(): Audio = audioObservable.value!!
 
-    override fun onClick(p0: View?) {
-        audioObservable.value = currentState().copy(isPlaying = !currentState().isPlaying)
-        EventBus.getDefault().post(AudioUpdateEvent(currentState()))
-
+    private fun updateAudioState(toPlay: Boolean = !currentState().isPlaying) {
+        audioObservable.value = currentState().copy(isPlaying = toPlay)
         currentState().icon.setColorFilter(if (currentState().isPlaying) currentState().iconColor else Color.LTGRAY, PorterDuff.Mode.SRC_IN)
+        EventBus.getDefault().post(AudioUpdateEvent(currentState()))
+    }
+
+    override fun onClick(p0: View?) {
+        updateAudioState()
     }
 
     override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
@@ -37,5 +43,14 @@ class AudioViewModel(audio: Audio) : View.OnClickListener, SeekBar.OnSeekBarChan
     }
 
     override fun onStopTrackingTouch(p0: SeekBar?) {
+    }
+
+    fun onDestroy() {
+        EventBus.getDefault().unregister(this)
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onMessageEvent(event: MuteButtonClickedEvent) {
+        updateAudioState(false)
     }
 }

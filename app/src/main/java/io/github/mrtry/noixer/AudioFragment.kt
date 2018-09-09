@@ -14,6 +14,7 @@ import kotlinx.android.synthetic.main.fragment_audio.view.*
 
 class AudioFragment : Fragment() {
     lateinit var audioList: List<Audio>
+    lateinit var binding: FragmentAudioBinding
 
     companion object {
         fun newInstance(audioList: List<Audio>): AudioFragment {
@@ -25,7 +26,7 @@ class AudioFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val binding = DataBindingUtil.inflate<FragmentAudioBinding>(inflater, R.layout.fragment_audio, container, false)
+        binding = DataBindingUtil.inflate<FragmentAudioBinding>(inflater, R.layout.fragment_audio, container, false)
 
         binding.root.audioList.apply {
             this.layoutManager = GridLayoutManager(activity, 2)
@@ -36,5 +37,8 @@ class AudioFragment : Fragment() {
         return binding.root
     }
 
-
+    override fun onDestroy() {
+        super.onDestroy()
+        (binding.root.audioList.adapter as AudioAdapter).onDestroy()
+    }
 }

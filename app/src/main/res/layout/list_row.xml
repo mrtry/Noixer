@@ -20,7 +20,7 @@
             android:id="@+id/button"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:background="@color/transparent"
+            android:background="@color/background"
             android:tint="@color/light_gray"
             android:src="@{viewModel.audioObservable.icon}"
             android:onClick="@{viewModel}" />

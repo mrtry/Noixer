@@ -10,7 +10,8 @@ import io.github.mrtry.noixer.databinding.ListRowBinding
 /**
  * Created by mrtry on 2018/07/15.
  */
-class AudioAdapter(private val audioList: List<Audio>): RecyclerView.Adapter<AudioAdapter.ViewHolder>() {
+class AudioAdapter(private val audioList: List<Audio>) : RecyclerView.Adapter<AudioAdapter.ViewHolder>() {
+    private val viewModelList = mutableListOf<AudioViewModel>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AudioAdapter.ViewHolder {
         val binding = DataBindingUtil.inflate<ListRowBinding>(LayoutInflater.from(parent.context), R.layout.list_row, parent, false)
@@ -19,13 +20,23 @@ class AudioAdapter(private val audioList: List<Audio>): RecyclerView.Adapter<Aud
 
     override fun onBindViewHolder(holder: AudioAdapter.ViewHolder, position: Int) {
         val viewModel = AudioViewModel(audioList[position])
-        holder.binding.viewModel = viewModel
-        holder.binding.seekBar.progress = (viewModel.audioObservable.value!!.volume * 100).toInt()
-        holder.binding.executePendingBindings()
+        viewModelList.add(viewModel)
+
+        holder.binding.apply {
+            this.viewModel = viewModel
+            this.seekBar.progress = (viewModel.audioObservable.value!!.volume * 100).toInt()
+            this.executePendingBindings()
+        }
     }
 
     override fun getItemCount(): Int {
         return audioList.size
+    }
+
+    fun onDestroy() {
+        viewModelList.forEach {
+            it.onDestroy()
+        }
     }
 
     class ViewHolder(val binding: ListRowBinding) : RecyclerView.ViewHolder(binding.root)

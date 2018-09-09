@@ -67,6 +67,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         bindService(serviceIntent, serviceConnection, Context.BIND_AUTO_CREATE)
         binding.setLifecycleOwner(this)
+        binding.viewModel = MuteButtonViewModel()
     }
 
     private fun syncAudioState(audioList: List<Audio>) {
